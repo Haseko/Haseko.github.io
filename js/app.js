@@ -123,7 +123,7 @@ buttons.forEach((button) => {
 });
 
 Telegram.WebApp.ready();
-Telegram.WebApp.MainButton.setText('Открыть игру').show().onClick(function () {
+Telegram.WebApp.MainButton.setText('Я заполнил корзину!').show().onClick(function () {
     const data = JSON.stringify(order);
     Telegram.WebApp.sendData(data);
     Telegram.WebApp.close();
