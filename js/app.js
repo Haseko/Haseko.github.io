@@ -39,7 +39,7 @@ order = base["order"];
 
 var div = $('#main-menu')
 
-for (item of base["menu"]) {
+for ([key, item] of Object.entries(base["menu"])) {
     div.append(gen_item(item))
 
     img = $('[attr-id="' + item['id'] + '"]').find("img")
