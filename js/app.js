@@ -1,4 +1,4 @@
-base = JSON.parse(Telegram.WebApp.initData)
+base = JSON.parse(Telegram.WebApp.initDataUnsafe)
 
 function gen_item(item) {
 
