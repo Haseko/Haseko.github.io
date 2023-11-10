@@ -1,39 +1,4 @@
-base = {
-    "menu": [
-        {
-            "id": 1,
-            "image": "http://46.17.104.99:4237/media/images/%D0%BA%D0%B0%D0%BB%D1%8C%D1%8F%D0%BD-%D0%BD%D0%B0-%D0%B3%D1%80%D0%B0%D0%BD%D0%B0%D1%82%D0%B5.jpg",
-            "name": "Кальян на гранате",
-            "price": 400,
-            "description": "Картофельные оладушки с семгойКартофельные оладушки с семгойКартофельные оладушки с семгойКартофельные оладушки с семгой",
-            "category": 1
-        },
-        {
-            "id": 2,
-            "image": "http://46.17.104.99:4237/media/images/%D0%BA%D0%B0%D0%BB%D1%8C%D1%8F%D0%BD-%D0%BD%D0%B0-%D0%BF%D0%BE%D0%BC%D0%B5%D0%BB%D0%BE.jpg",
-            "name": "Кальян на помело",
-            "price": 500,
-            "description": "Картофельные оладушки с семгойКартофельные оладушки с семгойКартофельные оладушки с семгойКартофельные оладушки с семгой",
-            "category": 1
-        },
-        {
-            "id": 3,
-            "image": "http://46.17.104.99:4237/media/images/0e85415eb48285db2eb08f2a87.jpg.webp",
-            "name": "Картофельные оладушки с семгой",
-            "price": 230,
-            "description": "Картофельные оладушки с семгойКартофельные оладушки с семгойКартофельные оладушки с семгойКартофельные оладушки с семгой",
-            "category": 2
-        },
-        {
-            "id": 4,
-            "image": "http://46.17.104.99:4237/media/images/2d225d5a8abd4616dc7a77e30b.jpg.webp",
-            "name": "Фаршированные перепелиные яйца",
-            "price": 200,
-            "description": "Картофельные оладушки с семгойКартофельные оладушки с семгойКартофельные оладушки с семгойКартофельные оладушки с семгой",
-            "category": 2
-        }
-    ]
-}
+base = JSON.parse(Telegram.WebApp.initData)
 
 function gen_item(item) {
 
@@ -70,7 +35,7 @@ function gen_item(item) {
     return source
 }
 
-order = {};
+order = base["order"];
 
 var div = $('#main-menu')
 
@@ -105,6 +70,10 @@ buttons.forEach((button) => {
     numberContainer.textContent = newNumber;
 
     order[elementId] = newNumber;
+
+    if (newNumber == 0) {
+        delete order[elementId]
+    }
 
     if (newNumber === minValue) {
       decrement.disabled = true;
