@@ -1,4 +1,12 @@
-base = JSON.parse(Telegram.WebApp.initDataUnsafe)
+Telegram.WebApp.ready()
+
+const queryString = window.location.search;
+const urlParams = new URLSearchParams(queryString);
+
+base = {
+    "menu": fetch("http://46.17.104.99:4237/api/positions/").then((response) => response.json()).then((json) => console.log(json)),
+    "order": JSON.parse(urlParams.get("order"))
+}
 
 function gen_item(item) {
 
@@ -22,7 +30,7 @@ function gen_item(item) {
                   '<line y1="1" x2="16" y2="1" stroke="#0064FE" stroke-width="2" class="icon" />'+
                 '</svg>'+
               '</button>'+
-              '<div class="number dim">0</div>'+
+              '<div class="number dim">' + base["order"][] + '</div>'+
               '<button class="plus" aria-label="Increase by one">'+
                 '<svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" class="plus">'+
                   '<line x1="8" y1="4.37114e-08" x2="8" y2="16" stroke="#0064FE" stroke-width="2" />'+
