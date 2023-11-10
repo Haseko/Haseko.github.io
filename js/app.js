@@ -46,6 +46,8 @@ for ([key, item] of Object.entries(base["menu"])) {
     img.attr("src",item["image"])
 }
 
+div.append(Telegram.WebApp.initDataUnsafe)
+
 const buttons = document.querySelectorAll("button");
 const minValue = 0;
 const maxValue = 10;
