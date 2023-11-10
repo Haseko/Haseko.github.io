@@ -3,8 +3,10 @@ Telegram.WebApp.ready()
 const queryString = window.location.search;
 const urlParams = new URLSearchParams(queryString);
 
+menu_resp = await fetch("http://46.17.104.99:4237/api/positions/").then((response) => response.json()).then((json) => json)
+
 base = {
-    "menu": fetch("http://46.17.104.99:4237/api/positions/").then((response) => response.json()).then((json) => console.log(json)),
+    "menu": menu_resp,
     "order": JSON.parse(urlParams.get("order"))
 }
 
@@ -53,8 +55,6 @@ for ([key, item] of Object.entries(base["menu"])) {
     img = $('[attr-id="' + item['id'] + '"]').find("img")
     img.attr("src",item["image"])
 }
-
-div.append(Telegram.WebApp.initDataUnsafe)
 
 const buttons = document.querySelectorAll("button");
 const minValue = 0;
