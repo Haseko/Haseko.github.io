@@ -81,7 +81,7 @@ function gen_item(item) {
     return source
 }
 
-order = base["order"];
+order = {};
 
 var div = $('#main-menu')
 
