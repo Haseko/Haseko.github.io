@@ -112,7 +112,7 @@ order = {};
 
 Telegram.WebApp.ready();
 Telegram.WebApp.MainButton.setText('Я заполнил корзину!').show().onClick(function () {
-    const data = JSON.stringify(order);
+    const data = JSON.stringify(base["order"]);
     Telegram.WebApp.sendData(data);
     Telegram.WebApp.close();
 });
