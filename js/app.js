@@ -3,49 +3,6 @@ Telegram.WebApp.ready()
 const queryString = window.location.search;
 const urlParams = new URLSearchParams(queryString);
 
-menu_resp = [
-  {
-    "id": 1,
-    "image": "http://46.17.104.99:4237/media/images/%D0%BA%D0%B0%D0%BB%D1%8C%D1%8F%D0%BD-%D0%BD%D0%B0-%D0%B3%D1%80%D0%B0%D0%BD%D0%B0%D1%82%D0%B5.jpg",
-    "name": "Кальян на гранате",
-    "price": 400,
-    "description": "",
-    "category": 1
-  },
-  {
-    "id": 2,
-    "image": "http://46.17.104.99:4237/media/images/%D0%BA%D0%B0%D0%BB%D1%8C%D1%8F%D0%BD-%D0%BD%D0%B0-%D0%BF%D0%BE%D0%BC%D0%B5%D0%BB%D0%BE.jpg",
-    "name": "Кальян на помело",
-    "price": 500,
-    "description": "",
-    "category": 1
-  },
-  {
-    "id": 3,
-    "image": "http://46.17.104.99:4237/media/images/0e85415eb48285db2eb08f2a87.jpg.webp",
-    "name": "Картофельные оладушки с семгой",
-    "price": 230,
-    "description": "",
-    "category": 2
-  },
-  {
-    "id": 4,
-    "image": "http://46.17.104.99:4237/media/images/2d225d5a8abd4616dc7a77e30b.jpg.webp",
-    "name": "Фаршированные перепелиные яйца",
-    "price": 200,
-    "description": "",
-    "category": 2
-  }
-]
-
- //(async () => await fetch("http://46.17.104.99:4237/api/positions/", {mode: "no-cors"})
-    //.then((response) => response.json()))()
-
-base = {
-    "menu": menu_resp,
-    "order": JSON.parse(urlParams.get("order"))
-}
-
 function gen_item(item) {
 
     source='<div class="menu-item" attr-id="' + item["id"] + '">'+
@@ -81,63 +38,77 @@ function gen_item(item) {
     return source
 }
 
-order = {};
 
-var div = $('#main-menu')
-
-for (i in base["menu"]) {
-    item = base["menu"][i]
-    console.log(item)
-    div.append(gen_item(item))
-
-    img = $('[attr-id="' + item['id'] + '"]').find("img")
-    img.attr("src",item["image"])
+base = {
+    "order": JSON.parse(urlParams.get("order"))
 }
 
-const buttons = document.querySelectorAll("button");
-const minValue = 0;
-const maxValue = 10;
+menu_resp = fetch("https://mdiary.ru/api/positions/")
+    .then((response) => response.json())
+    .then((data) => {
+        base["menu"] = data
+        console.log(base["menu"])
+        var div = $('#main-menu')
 
-buttons.forEach((button) => {
-  button.addEventListener("click", (event) => {
-    const element = event.currentTarget;
-    const parent = element.parentNode;
+        for (i in base["menu"]) {
+            item = base["menu"][i]
+            console.log(item)
+            div.append(gen_item(item))
 
-    const elementId = parent.getAttribute("attr-id");
+            img = $('[attr-id="' + item['id'] + '"]').find("img")
+            img.attr("src",item["image"])
+        }
 
-    const numberContainer = parent.querySelector(".number");
-    const number = parseFloat(numberContainer.textContent);
+        const buttons = document.querySelectorAll("button");
+        const minValue = 0;
+        const maxValue = 10;
 
-    const increment = parent.querySelector(".plus");
-    const decrement = parent.querySelector(".minus");
+        buttons.forEach((button) => {
+          button.addEventListener("click", (event) => {
+            const element = event.currentTarget;
+            const parent = element.parentNode;
 
-    const newNumber = element.classList.contains("plus")
-      ? number + 1
-      : number - 1;
+            const elementId = parent.getAttribute("attr-id");
 
-    numberContainer.textContent = newNumber;
+            const numberContainer = parent.querySelector(".number");
+            const number = parseFloat(numberContainer.textContent);
 
-    order[elementId] = newNumber;
+            const increment = parent.querySelector(".plus");
+            const decrement = parent.querySelector(".minus");
 
-    if (newNumber == 0) {
-        delete order[elementId]
-    }
+            const newNumber = element.classList.contains("plus")
+              ? number + 1
+              : number - 1;
 
-    if (newNumber === minValue) {
-      decrement.disabled = true;
-      numberContainer.classList.add("dim");
-      element.blur();
-    } else if (newNumber > minValue && newNumber < maxValue) {
-      decrement.disabled = false;
-      increment.disabled = false;
-      numberContainer.classList.remove("dim");
-    } else if (newNumber === maxValue) {
-      increment.disabled = true;
-      numberContainer.textContent = `${newNumber}+`;
-      element.blur();
-    }
-  });
-});
+            numberContainer.textContent = newNumber;
+
+            order[elementId] = newNumber;
+
+            if (newNumber == 0) {
+                delete order[elementId]
+            }
+
+            if (newNumber === minValue) {
+              decrement.disabled = true;
+              numberContainer.classList.add("dim");
+              element.blur();
+            } else if (newNumber > minValue && newNumber < maxValue) {
+              decrement.disabled = false;
+              increment.disabled = false;
+              numberContainer.classList.remove("dim");
+            } else if (newNumber === maxValue) {
+              increment.disabled = true;
+              numberContainer.textContent = `${newNumber}+`;
+              element.blur();
+            }
+          });
+        });
+
+    })
+
+order = {};
+
+
 
 Telegram.WebApp.ready();
 Telegram.WebApp.MainButton.setText('Я заполнил корзину!').show().onClick(function () {
