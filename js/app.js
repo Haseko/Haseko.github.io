@@ -3,7 +3,43 @@ Telegram.WebApp.ready()
 const queryString = window.location.search;
 const urlParams = new URLSearchParams(queryString);
 
-menu_resp = await fetch("http://46.17.104.99:4237/api/positions/").then((response) => response.json()).then((json) => json)
+menu_resp = [
+  {
+    "id": 1,
+    "image": "http://46.17.104.99:4237/media/images/%D0%BA%D0%B0%D0%BB%D1%8C%D1%8F%D0%BD-%D0%BD%D0%B0-%D0%B3%D1%80%D0%B0%D0%BD%D0%B0%D1%82%D0%B5.jpg",
+    "name": "Кальян на гранате",
+    "price": 400,
+    "description": "",
+    "category": 1
+  },
+  {
+    "id": 2,
+    "image": "http://46.17.104.99:4237/media/images/%D0%BA%D0%B0%D0%BB%D1%8C%D1%8F%D0%BD-%D0%BD%D0%B0-%D0%BF%D0%BE%D0%BC%D0%B5%D0%BB%D0%BE.jpg",
+    "name": "Кальян на помело",
+    "price": 500,
+    "description": "",
+    "category": 1
+  },
+  {
+    "id": 3,
+    "image": "http://46.17.104.99:4237/media/images/0e85415eb48285db2eb08f2a87.jpg.webp",
+    "name": "Картофельные оладушки с семгой",
+    "price": 230,
+    "description": "",
+    "category": 2
+  },
+  {
+    "id": 4,
+    "image": "http://46.17.104.99:4237/media/images/2d225d5a8abd4616dc7a77e30b.jpg.webp",
+    "name": "Фаршированные перепелиные яйца",
+    "price": 200,
+    "description": "",
+    "category": 2
+  }
+]
+
+ //(async () => await fetch("http://46.17.104.99:4237/api/positions/", {mode: "no-cors"})
+    //.then((response) => response.json()))()
 
 base = {
     "menu": menu_resp,
@@ -32,7 +68,7 @@ function gen_item(item) {
                   '<line y1="1" x2="16" y2="1" stroke="#0064FE" stroke-width="2" class="icon" />'+
                 '</svg>'+
               '</button>'+
-              '<div class="number dim">' + base["order"][item["id"]] | 0 + '</div>'+
+              '<div class="number dim">' + (base["order"][item["id"]] | 0) + '</div>'+
               '<button class="plus" aria-label="Increase by one">'+
                 '<svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" class="plus">'+
                   '<line x1="8" y1="4.37114e-08" x2="8" y2="16" stroke="#0064FE" stroke-width="2" />'+
@@ -49,7 +85,9 @@ order = base["order"];
 
 var div = $('#main-menu')
 
-for ([key, item] of Object.entries(base["menu"])) {
+for (i in base["menu"]) {
+    item = base["menu"][i]
+    console.log(item)
     div.append(gen_item(item))
 
     img = $('[attr-id="' + item['id'] + '"]').find("img")
