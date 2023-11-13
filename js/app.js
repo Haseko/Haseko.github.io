@@ -20,7 +20,7 @@ function gen_item(item) {
               '</p>'+
             '</div>'+
             '<div class="input" attr-id="' + item["id"] + '">'+
-              '<button class="minus" aria-label="Decrease by one" ' + ((base["order"][item["id"]] | 0) > 0 ? 'disabled' : '') + '>'+
+              '<button class="minus" aria-label="Decrease by one" ' + ((base["order"][item["id"]] | 0) == 0 ? 'disabled' : '') + '>'+
                 '<svg width="16" height="2" viewBox="0 0 16 2" fill="none" xmlns="http://www.w3.org/2000/svg">'+
                   '<line y1="1" x2="16" y2="1" stroke="#0064FE" stroke-width="2" class="icon" />'+
                 '</svg>'+
