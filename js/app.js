@@ -43,7 +43,7 @@ base = {
     "order": JSON.parse(urlParams.get("order"))
 }
 
-menu_resp = fetch("https://mdiary.ru/api/positions/")
+menu_resp = fetch("https://hoomie.guess-word.com/api/positions/")
     .then((response) => response.json())
     .then((data) => {
         base["menu"] = data
